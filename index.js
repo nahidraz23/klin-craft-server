@@ -28,6 +28,37 @@ async function run() {
     // await client.connect();
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
+    
+    const usersCollection = client.db('klincraftDB').collection('users');
+    const itemsCollection = client.db('klincraftDB').collection('items');
+
+    app.get('/users', async(req, res) => {
+      const cursor = usersCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+    app.get('/items', async(req, res) => {
+      const cursor = itemsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+    app.post('/items', async(req, res) => {
+      const items = req.body;
+      console.log(items)
+      const result = await itemsCollection.insertOne(items);
+      res.send(result);
+    })
+
+    app.post('/users', async(req, res) => {
+      const user = req.body;
+      console.log(user);
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
+    })
+
+
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
@@ -35,9 +66,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
-
-
 
 
 //Local server checking

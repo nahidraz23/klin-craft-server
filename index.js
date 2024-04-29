@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 5300;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 //Middleware
 app.use(express.json());
@@ -36,24 +36,43 @@ async function run() {
       const cursor = usersCollection.find();
       const result = await cursor.toArray();
       res.send(result);
-    })
+    });
 
     app.get('/items', async(req, res) => {
       const cursor = itemsCollection.find();
       const result = await cursor.toArray();
       res.send(result);
+    });
+
+    app.get('/items/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await itemsCollection.findOne(query);
+      res.send(result)
+    })
+
+    app.get('/myCraft/:email', async(req, res) => {
+      const email = req.params.email;
+      const query = {email: email};
+      const result = await itemsCollection.find(query).toArray();
+      res.send(result);
+    })
+
+    app.get('/subcategorydetails/:subcategory_Name', async(req, res) => {
+      const subcategory_Name = req.params.subcategory_Name;
+      const query = {subcategory_Name : subcategory_Name}
+      const result = await itemsCollection.find(query).toArray();
+      res.send(result)
     })
 
     app.post('/items', async(req, res) => {
       const items = req.body;
-      console.log(items)
       const result = await itemsCollection.insertOne(items);
       res.send(result);
     })
 
     app.post('/users', async(req, res) => {
       const user = req.body;
-      console.log(user);
       const result = await usersCollection.insertOne(user);
       res.send(result);
     })

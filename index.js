@@ -58,12 +58,12 @@ async function run () {
       res.send(result)
     })
 
-    // app.get('/subcategorydetails/:subcategory_Name', async (req, res) => {
-    //   const subcategory_Name = req.params.subcategory_Name
-    //   const query = { subcategory_Name: subcategory_Name }
-    //   const result = await itemsCollection.find(query).toArray()
-    //   res.send(result)
-    // })
+    app.get('/subcategorydetails/:subcategory_Name', async (req, res) => {
+      const subcategory_Name = req.params.subcategory_Name
+      const query = { subcategory_Name: subcategory_Name }
+      const result = await itemsCollection.find(query).toArray()
+      res.send(result)
+    })
 
     app.post('/items', async (req, res) => {
       const items = req.body

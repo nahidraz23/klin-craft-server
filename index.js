@@ -77,26 +77,26 @@ async function run () {
       res.send(result)
     })
 
-    // app.put('/items/:id', async (req, res) => {
-    //   const id = req.params.id
-    //   const filter = { _id: new ObjectId(id) }
-    //   const updatedItem = req.body
-    //   const item = {
-    //     $set: {
-    //       item_name: updatedItem.item_name,
-    //       short_description: updatedItem.short_description,
-    //       price: updatedItem.price,
-    //       rating: updatedItem.rating,
-    //       customization: updatedItem.customization,
-    //       processing_time: updatedItem.processing_time,
-    //       stock_status: updatedItem.stock_status,
-    //       image: updatedItem.image,
-    //       subcategory_Name: updatedItem.subcategory_Name
-    //     }
-    //   }
-    //   const result = await itemsCollection.updateOne(filter, item)
-    //   res.send(result)
-    // })
+    app.put('/items/:id', async (req, res) => {
+      const id = req.params.id
+      const filter = { _id: new ObjectId(id) }
+      const updatedItem = req.body
+      const item = {
+        $set: {
+          item_name: updatedItem.item_name,
+          short_description: updatedItem.short_description,
+          price: updatedItem.price,
+          rating: updatedItem.rating,
+          customization: updatedItem.customization,
+          processing_time: updatedItem.processing_time,
+          stock_status: updatedItem.stock_status,
+          image: updatedItem.image,
+          subcategory_Name: updatedItem.subcategory_Name
+        }
+      }
+      const result = await itemsCollection.updateOne(filter, item)
+      res.send(result);
+    })
 
     app.delete('/myartcraft/:id', async (req, res) => {
       const id = req.params.id
